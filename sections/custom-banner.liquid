@@ -1,0 +1,675 @@
+<style>
+                 .custom-banner__header {
+                 background-color: #f5f5f5;
+                 position: sticky;
+                 top: 0;
+                 z-index: 1000;
+                 width: 100%;
+                 transition: 0.3s ease-in-out;
+               }
+                .custom-banner__header.is-sticky {
+                  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+                }
+                .custom-banner__header.has-dropdown-open {
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                }
+                 .custom-banner__header .container {
+                 display: flex;
+                 align-items: center;
+                 justify-content: space-between;
+                 margin: auto;
+                 min-height: 64px;
+                 padding: 10px 30px;
+               }
+                 .custom-banner__header-left,
+                 .custom-banner__header-center,
+                 .custom-banner__header-right {
+                 display: flex;
+                 align-items: center;
+                 flex: 1 1 0 !important;
+               }
+                 .custom-banner__header-left {
+                 flex: 1 1 0;
+                 justify-content: flex-start;
+                 }
+                 .custom-banner__header-center {
+                 flex: 2 1 0;
+                 justify-content: center;
+                 }
+                 .custom-banner__header-right {
+                 flex: 1 1 0;
+                 justify-content: flex-end;
+                 }
+                 .custom-banner__logo {
+                 text-decoration: none;
+                 }
+                 .custom-banner__logo img {
+                 display: block;
+                 height: 40px;
+                 }
+                 .custom-banner__logo-text {
+                 font-family: inherit;
+                 }
+                 .custom-banner__logo-text-{{ section.id }} {
+                 font-size: {{ section.settings.logo_text_font_size }}px;
+                 font-weight: {{ section.settings.logo_text_font_weight }};
+                 color: {{ section.settings.logo_text_color }};
+                 margin-left: {{ section.settings.logo_text_margin }}px;
+                 margin-right: {{ section.settings.logo_text_margin }}px;
+                 letter-spacing: {{ section.settings.logo_text_letter_spacing }}px;
+                 }
+                .custom-banner__burger {
+                  background: none;
+                  border: none;
+                  padding: 0;
+                  cursor: pointer;
+                  display: flex;
+                  align-items: center;
+                  position: relative;
+                  transition: transform 0.2s ease;
+                  }
+                  .custom-banner__burger:hover {
+                  transform: scale(1.1);
+                  }
+                  .custom-banner__burger:active {
+                  transform: scale(0.95);
+                  }
+                 .custom-banner__burger img {
+                  width: 18px;
+                  }
+                  .custom-banner__burger .icon-menu {
+                  display: block;
+                  opacity: 1;
+                  transform: rotate(0deg);
+                  transition: opacity 0.3s ease, transform 0.3s ease;
+                  }
+                  .custom-banner__burger .icon-cross {
+                  display: block;
+                  opacity: 0;
+                  transform: rotate(90deg);
+                  transition: opacity 0.3s ease, transform 0.3s ease;
+                  position: absolute;
+                  }
+                  .custom-banner__burger.is-active .icon-menu {
+                  opacity: 0;
+                  transform: rotate(-90deg);
+                  }
+                  .custom-banner__burger.is-active .icon-cross {
+                  opacity: 1;
+                  transform: rotate(0deg);
+                  }
+                  .custom-banner__mobile-dropdown {
+                  position: absolute;
+                  top: 100%;
+                  left: 0;
+                  right: 0;
+                  background-color: #f5f5f5;
+                  border-top: 1px solid #e0e0e0;
+                  padding: 20px 30px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 20px;
+                  z-index: 999;
+                  max-height: 0;
+                  overflow: hidden;
+                  opacity: 0;
+                  transform: translateY(-10px);
+                  transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+                  }
+                  .custom-banner__mobile-dropdown.is-open {
+                  max-height: 200px;
+                  opacity: 1;
+                  transform: translateY(0);
+                  }
+                  .custom-banner__mobile-button {
+                  align-self: center;
+                  }
+                 .custom-banner__welcome {
+                 font-family: Jost;
+                 font-size: 16px;
+                 font-weight: normal;
+                 font-stretch: normal;
+                 font-style: normal;
+                 line-height: 0.84;
+                 letter-spacing: normal;
+                 text-align: center;
+                 color: #000;
+                 }
+                 .custom-banner__hero {
+                 background-attachment: scroll;
+                 background-color: #ffffff;
+                 background-repeat: no-repeat;
+                 background-size: contain;
+                 background: url('{{ 'banner-image-desktop.svg' | asset_url }}');
+                 position: relative;
+                 min-height: 780px;
+                 }
+                 .custom-banner__hero-content {
+                 position: absolute;
+                 left: 0;
+                 bottom: 0;
+                 margin-left: 67px;
+                 margin-bottom: 50px;
+                 max-width: 483px;
+                 display: flex;
+                 flex-direction: column;
+                 text-align: left;
+                 align-items: flex-start;
+                 gap: 50px;
+                 background: #ffffff;
+                 }
+                 .custom-banner__hero-title {
+                 font-family: Jost;
+                 font-size: 70px;
+                 font-weight: 500;
+                 font-stretch: normal;
+                 font-style: normal;
+                 line-height: 1;
+                 letter-spacing: normal;
+                 text-align: left;
+                 color: #000;
+                 margin: 0  !important;
+                 }
+                 .custom-banner__hero-description {
+                 font-family: Jost;
+                 font-size: 20px;
+                 font-weight: normal;
+                 font-stretch: normal;
+                 font-style: normal;
+                 line-height: 1.4;
+                 letter-spacing: normal;
+                 text-align: left;
+                 color: #000;
+                 margin: 0 !important;
+                 }
+                 .custom-button {
+                 display: flex;
+                 align-items: center;
+                 font-family: Jost;
+                 font-size: 16px;
+                 font-weight: normal;
+                 font-stretch: normal;
+                 font-style: normal;
+                 line-height: 1.28;
+                 letter-spacing: normal;
+                 text-align: center;
+                 text-transform: uppercase;
+                 padding: 11px 20px 11px 40px;
+              	border: none;
+                 text-decoration: none;
+                 -webkit-transition: ease-out 0.4s;
+                 -moz-transition: ease-out 0.4s;
+                 transition: ease-out 0.4s;
+                 }
+                 .button--primary {
+                 color: #000000;
+                 background-color: #ffe600;
+                 box-shadow: inset 0 0 0 0 #000000;
+                 }
+                 .button--primary:hover {
+                 box-shadow: inset 400px 0 0 0 #000000;
+                 color: #ffffff;
+                 }
+                 .button--primary .button__arrow-icon {
+                 color: #000;
+                 margin-left: 18px;
+                 display: flex;
+                 align-items: center;
+                 transition: color 0.4s ease-out;
+                 }
+                 .button--primary:hover .button__arrow-icon {
+                 color: #fff;
+                 }
+
+                 .button--secondary {
+                 color: #ffffff;
+                 background-color: #000000;
+                 box-shadow: inset 0 0 0 0 #ffe600;
+                 }
+                 .button--secondary:hover {
+                 box-shadow: inset 400px 0 0 0 #ffe600;
+                 color: #000000;
+                 }
+                 .button--secondary .button__arrow-icon {
+                 color: #fff;
+                 margin-left: 18px;
+                 display: flex;
+                 align-items: center;
+                 transition: color 0.4s ease-out;
+                 }
+                 .button--secondary:hover .button__arrow-icon {
+                 color: #000;
+                 }
+                 .custom-banner__bottom-content{
+                 display: flex;
+                 flex-direction: row;
+                 justify-content: center;
+                 align-items: center;
+                 gap: 375px;
+                 padding: {{ section.settings.bottom_content_padding }}px 15px;
+                 background-color: #f5f5f5;
+                 }
+                 .custom-banner__bottom-text{
+                 margin: 0;
+                 font-family: Jost;
+                 font-size: {{ section.settings.bottom_content_font_size }}px;
+                 font-weight: {{ section.settings.bottom_content_font_weight }};
+                 font-stretch: normal;
+                 font-style: normal;
+                 line-height: 0.84;
+                 letter-spacing: normal;
+                 color: {{ section.settings.bottom_content_text_color }};
+                 text-transform: uppercase;
+                 }
+          .desktop-only{
+          	display:inline-flex !important;
+          }
+             .mobile-only{
+           	display:none !important;
+           }
+           @media (max-width: 767px) {
+         .mobile-only{
+         	display:inline-flex !important;
+         }
+         .desktop-only{
+         	display:none !important;
+         }
+         .custom-banner__hero{
+        background: unset;
+        position: relative;
+        min-height: 421px !important;
+      }
+         .custom-banner__hero-mobile-background{
+         	background: url('{{ 'banner-image-mobile.svg' | asset_url }}');
+         	background-attachment: scroll;
+         	background-color: #ffffff;
+         	background-repeat: repeat-x;
+         	background-size: auto;
+         	background-position: center;
+         	display: block!important;
+         	position: absolute;
+         	width: 100vw;
+         	height:264px;
+         	left: 0;
+         	bottom: 0;
+         }
+      .custom-banner__hero-content {
+
+     	position: relative;
+     	left: auto;
+     	right: auto;
+     	margin: 0 auto !important;
+     	max-width: 90%;
+     	text-align: center;
+     	align-items: center;
+     	gap: 24px;
+     	background: transparent;
+     	padding: 49px 15px 39px 15px;
+     	height: 42rem;
+     }
+     .custom-banner__hero-title {
+    font-size: 36px;
+    text-align: center;
+     }
+     .custom-banner__hero-description {
+    font-size: 16px;
+    text-align: center;
+     }
+     .custom-button.button--secondary{
+    	margin-top: auto;
+     }
+     .custom-banner__bottom-content{
+    padding: 10px 15px;
+     }
+     .custom-banner__bottom-text{
+    font-size: 14px;
+    margin: 0;
+    line-height: 13.2px;
+     }
+  }
+  @media (min-width: 768px) {
+      .container {
+        max-width: 1440px;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+</style>
+
+<section class="custom-banner">
+  <!-- Header START -->
+  <div class="custom-banner__header">
+    <div class="container">
+      <div class="custom-banner__header-left">
+        <!-- DESKTOP: Logo (image/text) -->
+        <a href="/" class="custom-banner__header-logo desktop-only">
+          {% if section.settings.logo_type == 'image' %}
+            {% if section.settings.logo_image != blank %}
+              <img
+                src="{{ section.settings.logo_image | image_url: width: 156 }}"
+                alt="{{ section.settings.logo_image }}"
+                width="{{ section.settings.logo_image_width | default: 156 }}"
+                height="{{ section.settings.logo_image_height | default: 19 }} "
+              >
+            {% else %}
+              <img
+                src="{{ 'logo.svg'  | asset_url}}"
+                alt="vision-logo"
+                width="{{ section.settings.logo_image_width | default: 156 }}"
+                height="{{ section.settings.logo_image_height | default: 19 }} "
+              >
+            {% endif %}
+          {% elsif section.settings.logo_type == 'text' and section.settings.logo_text != blank %}
+            <span class="custom-banner__logo-text custom-banner__logo-text-{{ section.id }}">
+              {{- section.settings.logo_text -}}
+            </span>
+          {% endif %}
+        </a>
+        <button class="custom-banner__burger mobile-only" aria-label="Open menu" id="mobile-menu-toggle">
+          <img src="{{ 'icon-mobile-menu.svg' | asset_url }}" alt="Menu" height="32" width="18" class="icon-menu">
+          <img src="{{ 'icon-cross-mobile.svg' | asset_url }}" alt="Close" height="15" width="15" class="icon-cross">
+        </button>
+      </div>
+      <div class="custom-banner__header-center">
+        <!-- Desktop: Welcome message | Mobile: Logo -->
+        <span class="custom-banner__welcome desktop-only">{{ section.settings.heading }}</span>
+        <a href="/" class="custom-banner__logo mobile-only">
+          {% if section.settings.logo_type == 'image' %}
+            {% if section.settings.logo_image != blank %}
+              <img
+                src="{{ section.settings.logo_image | image_url: width: 80 }}"
+                alt="Logo"
+                width="{{ section.settings.logo_image_width | default: 156 }}"
+                height="{{ section.settings.logo_image_height | default: 19 }}"
+              >
+            {% else %}
+              <img
+                src="{{ 'logo.svg' | asset_url }}"
+                alt="Logo"
+                width="{{ section.settings.logo_image_width | default: 156 }}"
+                height="{{ section.settings.logo_image_height | default: 19 }}"
+              >
+            {% endif %}
+          {% elsif section.settings.logo_type == 'text' and section.settings.logo_text != blank %}
+            <span class="custom-banner__logo-text custom-banner__logo-text-{{ section.id }}">
+              {{- section.settings.logo_text -}}
+            </span>
+          {% endif %}
+        </a>
+      </div>
+      <div class="custom-banner__header-right">
+        <!-- Desktop: header button | Mobile: hidden -->
+        <a
+          href="{{ section.settings.choose_gift_link }}"
+          class="custom-button button--primary desktop-only"
+        >
+          <span>{{ section.settings.choose_gift_text }}</span>
+          <span class="button__arrow-icon">
+            <svg width="27" height="12" viewBox="0 0 27 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 5.25C0.585786 5.25 0.25 5.58579 0.25 6C0.25 6.41421 0.585787 6.75 1 6.75L1 5.25ZM26.5303 6.53033C26.8232 6.23743 26.8232 5.76256 26.5303 5.46967L21.7574 0.696697C21.4645 0.403804 20.9896 0.403804 20.6967 0.696697C20.4038 0.989591 20.4038 1.46446 20.6967 1.75736L24.9393 6L20.6967 10.2426C20.4038 10.5355 20.4038 11.0104 20.6967 11.3033C20.9896 11.5962 21.4645 11.5962 21.7574 11.3033L26.5303 6.53033ZM1 6L1 6.75L26 6.75L26 6L26 5.25L1 5.25L1 6Z" fill="currentColor"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+    <!-- Mobile Dropdown Menu -->
+    <div class="custom-banner__mobile-dropdown" id="mobile-dropdown">
+      <p class="custom-banner__welcome">{{ section.settings.heading }}</p>
+      <a
+        href="{{ section.settings.choose_gift_link }}"
+        class="custom-button button--primary custom-banner__mobile-button"
+      >
+        <span>{{ section.settings.choose_gift_text }}</span>
+        <span class="button__arrow-icon">
+          <svg width="27" height="12" viewBox="0 0 27 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 5.25C0.585786 5.25 0.25 5.58579 0.25 6C0.25 6.41421 0.585787 6.75 1 6.75L1 5.25ZM26.5303 6.53033C26.8232 6.23743 26.8232 5.76256 26.5303 5.46967L21.7574 0.696697C21.4645 0.403804 20.9896 0.403804 20.6967 0.696697C20.4038 0.989591 20.4038 1.46446 20.6967 1.75736L24.9393 6L20.6967 10.2426C20.4038 10.5355 20.4038 11.0104 20.6967 11.3033C20.9896 11.5962 21.4645 11.5962 21.7574 11.3033L26.5303 6.53033ZM1 6L1 6.75L26 6.75L26 6L26 5.25L1 5.25L1 6Z" fill="currentColor"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+  <!-- Header END -->
+  <!-- Hero Section START -->
+  <div class="container">
+    <div class="custom-banner__hero">
+      <div class="custom-banner__hero-mobile-background"></div>
+      <div class="custom-banner__hero-content">
+        <h2 class="custom-banner__hero-title">{{ section.settings.hero_title }}</h2>
+        <p class="custom-banner__hero-description desktop-only">{{ section.settings.hero_description }}</p>
+        <p class="custom-banner__hero-description mobile-only">{{ section.settings.hero_description_mobile }}</p>
+
+        <!-- Hero button -->
+        <a
+          href="{{ section.settings.hero_button_link }}"
+          class="custom-button button--secondary"
+        >
+          <span>{{ section.settings.hero_button_text }}</span>
+          <span class="button__arrow-icon">
+            <svg width="27" height="12" viewBox="0 0 27 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 5.25C0.585786 5.25 0.25 5.58579 0.25 6C0.25 6.41421 0.585787 6.75 1 6.75L1 5.25ZM26.5303 6.53033C26.8232 6.23743 26.8232 5.76256 26.5303 5.46967L21.7574 0.696697C21.4645 0.403804 20.9896 0.403804 20.6967 0.696697C20.4038 0.989591 20.4038 1.46446 20.6967 1.75736L24.9393 6L20.6967 10.2426C20.4038 10.5355 20.4038 11.0104 20.6967 11.3033C20.9896 11.5962 21.4645 11.5962 21.7574 11.3033L26.5303 6.53033ZM1 6L1 6.75L26 6.75L26 6L26 5.25L1 5.25L1 6Z" fill="currentColor"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="custom-banner__bottom-content">
+    <p class="custom-banner__bottom-text desktop-only">{{ section.settings.bottom_content_text }}</p>
+    <p class="custom-banner__bottom-text mobile-only">{{ section.settings.bottom_content_text_mobile }}</p>
+  </div>
+  <!-- Hero Section END -->
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileDropdown = document.getElementById('mobile-dropdown');
+    const header = document.querySelector('.custom-banner__header');
+
+    if (mobileMenuToggle && mobileDropdown && header) {
+      mobileMenuToggle.addEventListener('click', function () {
+        // Toggle active class on burger button
+        mobileMenuToggle.classList.toggle('is-active');
+
+        // Toggle dropdown menu
+        mobileDropdown.classList.toggle('is-open');
+
+        // Toggle header shadow class
+        header.classList.toggle('has-dropdown-open');
+
+        // Update aria-label for accessibility
+        const isOpen = mobileDropdown.classList.contains('is-open');
+        mobileMenuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function (event) {
+        if (!mobileMenuToggle.contains(event.target) && !mobileDropdown.contains(event.target)) {
+          mobileMenuToggle.classList.remove('is-active');
+          mobileDropdown.classList.remove('is-open');
+          header.classList.remove('has-dropdown-open');
+          mobileMenuToggle.setAttribute('aria-label', 'Open menu');
+        }
+      });
+
+      // Close dropdown on escape key
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          mobileMenuToggle.classList.remove('is-active');
+          mobileDropdown.classList.remove('is-open');
+          header.classList.remove('has-dropdown-open');
+          mobileMenuToggle.setAttribute('aria-label', 'Open menu');
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "logo_type",
+      "label": "Logo Type",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "text", "label": "Text" }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text",
+      "default": "Tisso vision"
+    },
+    {
+      "type": "range",
+      "id": "logo_text_font_size",
+      "label": "Logo Text Font Size (px)",
+      "min": 12,
+      "max": 64,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "logo_text_font_weight",
+      "label": "Logo Text Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "logo_text_letter_spacing",
+      "label": "Logo Text Letter Spacing (px)",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "logo_text_color",
+      "label": "Logo Text Color",
+      "default": "#222222"
+    },
+    {
+      "type": "range",
+      "id": "logo_text_margin",
+      "label": "Logo Text Margin (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Banner Heading",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    {
+      "type": "text",
+      "id": "choose_gift_text",
+      "label": "Choose Gift Button Text",
+      "default": "Choose Gift"
+    },
+    {
+      "type": "url",
+      "id": "choose_gift_link",
+      "label": "Choose Gift Button Link",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "The Gift Guide"
+    },
+    {
+      "type": "text",
+      "id": "hero_description",
+      "label": "Hero Description (Desktop)",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+    },
+    {
+      "type": "text",
+      "id": "hero_description_mobile",
+      "label": "Hero Description (Mobile)",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
+    },
+    {
+      "type": "text",
+      "id": "hero_button_text",
+      "label": "Hero Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "Hero Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "bottom_content_text",
+      "label": "Bottom Content Text (Desktop)",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+    },
+    {
+      "type": "text",
+      "id": "bottom_content_text_mobile",
+      "label": "Bottom Content Text (Mobile)",
+      "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+    },
+    {
+      "type": "range",
+      "id": "bottom_content_font_size",
+      "label": "Bottom Content Font Size (px)",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "bottom_content_font_weight",
+      "label": "Bottom Content Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "bottom_content_text_color",
+      "label": "Bottom Content Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "bottom_content_padding",
+      "label": "Bottom Content Padding (px)",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Banner"
+    }
+  ]
+}
+{% endschema %}
